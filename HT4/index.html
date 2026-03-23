@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hometask 4</title>
+  <style>
+    :root {
+      --bg: #eef4f1;
+      --panel: #fbfdfc;
+      --ink: #18322c;
+      --muted: #48635a;
+      --accent: #2d7a58;
+      --border: #c9ddd3;
+      --code: #e5f0eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(45, 122, 88, 0.12), transparent 35%),
+        linear-gradient(180deg, #f7fbf9 0%, var(--bg) 100%);
+    }
+
+    main {
+      max-width: 900px;
+      margin: 48px auto;
+      padding: 0 20px 48px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 14px 40px rgba(24, 50, 44, 0.08);
+    }
+
+    h1, h2 {
+      margin: 0 0 16px;
+      line-height: 1.15;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      margin-top: 28px;
+    }
+
+    p, li {
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.6;
+    }
+
+    ul, ol {
+      padding-left: 22px;
+    }
+
+    code {
+      background: var(--code);
+      padding: 0.15rem 0.4rem;
+      border-radius: 6px;
+      color: var(--ink);
+      font-size: 0.96em;
+    }
+
+    pre {
+      margin: 0;
+      overflow-x: auto;
+      background: var(--code);
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(45, 122, 88, 0.12);
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.74rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card">
+      <div class="eyebrow">EC2 Networking</div>
+      <h1>Hometask 4</h1>
+      <p>Build a custom VPC for EC2 and prove the result through automatic checks instead of screenshots.</p>
+
+      <h2>Requirements</h2>
+      <ol>
+        <li>Create a VPC named <code>epic-network</code> with a non-default CIDR.</li>
+        <li>Create 2 public and 2 private subnets.</li>
+        <li>Create and attach route tables correctly.</li>
+        <li>Private subnets must not have a default route to an Internet Gateway.</li>
+        <li>Launch an EC2 instance in one of the public subnets using a new security group.</li>
+        <li>Create or update the EC2 role used for Session Manager and attach a custom read-only EC2 policy.</li>
+        <li>Use User data to install <code>nginx</code>, create <code>devops</code>, expose <code>index.html</code> and <code>check.json</code>, and refresh the check file every minute.</li>
+        <li>Use IMDSv2 and AWS CLI inside the instance to validate the network configuration.</li>
+      </ol>
+
+      <h2>What Must Be Visible Remotely</h2>
+      <p>When I open <code>http://&lt;public-ip&gt;/</code>, I must see a custom page with your name or email, the marker string <code>EC2-HT4-OK</code>, the VPC ID, the subnet ID, and the path <code>/check.json</code>.</p>
+      <p>When I open <code>http://&lt;public-ip&gt;/check.json</code>, I must receive valid JSON that describes the instance network placement, subnet counts, instance profile state, and service checks.</p>
+
+      <h2>Submission</h2>
+      <p>Submit only the public IP of your EC2 instance.</p>
+
+      <h2>How It Will Be Checked</h2>
+      <ul>
+        <li><code>http://&lt;public-ip&gt;/</code> returns HTTP 200.</li>
+        <li>The main page contains <code>EC2-HT4-OK</code>.</li>
+        <li>The main page contains your student identifier.</li>
+        <li><code>http://&lt;public-ip&gt;/check.json</code> returns valid JSON.</li>
+        <li>The instance reports a custom VPC, 4 subnets total, 2 public subnets, and 2 private subnets.</li>
+        <li>Private subnets do not have a default route to an Internet Gateway.</li>
+        <li>The instance profile is attached.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
