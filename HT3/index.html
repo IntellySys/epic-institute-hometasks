@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hometask 3</title>
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --panel: #fffaf2;
+      --ink: #1d2a32;
+      --muted: #56656f;
+      --accent: #b45f2d;
+      --border: #d9c8b4;
+      --code: #efe4d4;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(180, 95, 45, 0.18), transparent 30%),
+        linear-gradient(180deg, #f7f1e8 0%, var(--bg) 100%);
+    }
+
+    main {
+      max-width: 860px;
+      margin: 48px auto;
+      padding: 0 20px 48px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 14px 40px rgba(29, 42, 50, 0.08);
+    }
+
+    h1, h2 {
+      margin: 0 0 16px;
+      line-height: 1.15;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      margin-top: 28px;
+    }
+
+    p, li {
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.6;
+    }
+
+    ul, ol {
+      padding-left: 22px;
+    }
+
+    code {
+      background: var(--code);
+      padding: 0.15rem 0.4rem;
+      border-radius: 6px;
+      color: var(--ink);
+      font-size: 0.96em;
+    }
+
+    pre {
+      margin: 0;
+      overflow-x: auto;
+      background: var(--code);
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(180, 95, 45, 0.12);
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.74rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card">
+      <div class="eyebrow">EC2 Practice</div>
+      <h1>Hometask 3</h1>
+      <p>Launch an EC2 instance and configure it only through <strong>User data</strong>. This task is checked remotely, so screenshots are not required.</p>
+
+      <h2>Requirements</h2>
+      <ol>
+        <li>Create an EC2 instance using the practice session materials.</li>
+        <li>All server configuration must be done through User data in the EC2 launch form.</li>
+        <li>Your User data script must install <code>nginx</code>, create a <code>devops</code> user, enable and start <code>nginx</code>, create <code>/usr/local/bin/ht3-check.sh</code>, create <code>/var/www/html/index.html</code>, and create <code>/var/www/html/check.json</code>.</li>
+        <li>Your User data must run <code>/usr/local/bin/ht3-check.sh</code> at least once during provisioning.</li>
+        <li>Your User data must configure a cron job that refreshes <code>/var/www/html/check.json</code> every minute.</li>
+      </ol>
+
+      <h2>What Must Be Visible Remotely</h2>
+      <p>When I open <code>http://&lt;public-ip&gt;/</code>, I must see a custom page with your name or email, the marker string <code>EC2-HT3-OK</code>, the instance hostname, and the path <code>/check.json</code>.</p>
+      <p>When I open <code>http://&lt;public-ip&gt;/check.json</code>, I must receive valid JSON with this structure:</p>
+      <pre><code>{
+  "task": "HT3",
+  "marker": "EC2-HT3-OK",
+  "student": "student@example.com",
+  "hostname": "ip-172-31-0-10",
+  "updated_at_utc": "2026-03-23T18:10:00Z",
+  "checks": {
+    "nginx_active": true,
+    "nginx_enabled": true,
+    "devops_user_exists": true,
+    "index_html_exists": true
+  }
+}</code></pre>
+
+      <h2>Submission</h2>
+      <p>Submit only the public IP of your EC2 instance.</p>
+
+      <h2>How It Will Be Checked</h2>
+      <ul>
+        <li><code>http://&lt;public-ip&gt;/</code> returns HTTP 200.</li>
+        <li>The main page contains <code>EC2-HT3-OK</code>.</li>
+        <li>The main page contains your student identifier.</li>
+        <li><code>http://&lt;public-ip&gt;/check.json</code> returns valid JSON.</li>
+        <li>JSON contains the required fields.</li>
+        <li>All required checks in JSON are <code>true</code>.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
