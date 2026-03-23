@@ -44,6 +44,39 @@ nginx -g 'daemon off;'
 
 Do not rely on the default background daemon mode inside the container.
 
+## How the Checks Are Split
+
+The checker script runs on the **EC2 host**, not inside the container.
+
+Because of that, the checks are divided into two groups:
+
+### Host-level checks
+
+These checks verify what is configured on the EC2 machine itself:
+- Docker is installed
+- the container is running
+- HTTP responds with redirect to HTTPS
+- HTTPS responds successfully
+- the image was built and can be inspected through Docker
+
+Typical commands for host-level checks include:
+- `command -v docker`
+- `docker ps`
+- `docker image inspect`
+- `curl http://127.0.0.1/`
+- `curl -k https://127.0.0.1/`
+
+### Container-level checks
+
+These checks verify what is happening inside the running container:
+- `nginx` is running inside the container
+- the container serves the expected content
+
+Typical commands for container-level checks include:
+- `docker exec <container-name> pgrep nginx`
+
+This is **not** Docker-in-Docker. The checker uses Docker commands on the EC2 host to inspect the running container.
+
 ## What must be visible remotely
 
 When I open `http://<public-ip>/`, I must receive a redirect to HTTPS.
