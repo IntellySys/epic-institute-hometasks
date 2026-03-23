@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hometask 5</title>
+  <style>
+    :root {
+      --bg: #f3f0ea;
+      --panel: #fffdf9;
+      --ink: #2d241d;
+      --muted: #64564a;
+      --accent: #a14f1c;
+      --border: #dfd0c0;
+      --code: #f1e6da;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(161, 79, 28, 0.12), transparent 32%),
+        linear-gradient(180deg, #faf7f2 0%, var(--bg) 100%);
+    }
+
+    main {
+      max-width: 920px;
+      margin: 48px auto;
+      padding: 0 20px 48px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 14px 40px rgba(45, 36, 29, 0.08);
+    }
+
+    h1, h2 {
+      margin: 0 0 16px;
+      line-height: 1.15;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      margin-top: 28px;
+    }
+
+    p, li {
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.6;
+    }
+
+    ul, ol {
+      padding-left: 22px;
+    }
+
+    code {
+      background: var(--code);
+      padding: 0.15rem 0.4rem;
+      border-radius: 6px;
+      color: var(--ink);
+      font-size: 0.96em;
+    }
+
+    pre {
+      margin: 0;
+      overflow-x: auto;
+      background: var(--code);
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(161, 79, 28, 0.12);
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.74rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card">
+      <div class="eyebrow">Docker + HTTPS</div>
+      <h1>Hometask 5</h1>
+      <p>Run a custom HTTPS-enabled <code>nginx</code> server inside a Docker container on EC2 and prove the result through automatic checks.</p>
+
+      <h2>Requirements</h2>
+      <ol>
+        <li>Use a basic Ubuntu EC2 image.</li>
+        <li>Install Docker and all required packages yourself.</li>
+        <li>Build the final container from a basic Ubuntu image.</li>
+        <li>Install and configure <code>nginx</code> inside the container yourself.</li>
+        <li>Configure HTTP to redirect to HTTPS.</li>
+        <li>Serve a custom page and <code>/check.json</code> over HTTPS.</li>
+      </ol>
+
+      <h2>Important Container Note</h2>
+      <p>The main process inside a container must stay in the foreground. For <code>nginx</code>, use:</p>
+      <pre><code>nginx -g 'daemon off;'</code></pre>
+
+      <h2>What Must Be Visible Remotely</h2>
+      <p><code>http://&lt;public-ip&gt;/</code> must redirect to HTTPS.</p>
+      <p><code>https://&lt;public-ip&gt;/</code> must return a custom page with your student identifier and the marker <code>EC2-HT5-OK</code>.</p>
+      <p><code>https://&lt;public-ip&gt;/check.json</code> must return valid JSON that reports Docker, container, HTTPS, redirect, and content checks.</p>
+
+      <h2>Submission</h2>
+      <p>Submit only the public IP of your EC2 instance.</p>
+    </section>
+  </main>
+</body>
+</html>
