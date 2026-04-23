@@ -1,0 +1,18 @@
+# ============================================================
+# Dockerfile.v1  —  NAIVE (intentionally unoptimised)
+#
+# Students: build this first, record the image size, then
+# demonstrate that changing app.py triggers a full pip install.
+# ============================================================
+
+FROM python:3.12
+
+COPY . /app
+
+WORKDIR /app
+
+RUN pip install -r requirements.txt
+
+EXPOSE 5000
+
+CMD ["python", "app.py"]
